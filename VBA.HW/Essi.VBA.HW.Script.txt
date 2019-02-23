@@ -1,0 +1,78 @@
+Sub Stock_Market_Final()
+For Each ws In Worksheets
+
+'each worksheet is sorted by ticker/column A
+
+    Range("A1", Range("G1").End(xlDown)).Sort Key1:=Range("A1"), Order1:=xlAscending, Header:=xlYes
+
+   
+
+    Dim lastrow As Long
+
+    lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+   
+
+    ws.Range("I1").Value = "Stock Symbol"
+
+    ws.Range("J1").Value = "Total Trading Volume"
+
+    ws.Range("K1").Value = "YOY Price Change"
+
+   
+
+    Dim total_volume As Double
+
+    total_volume = 0
+
+   
+
+    Dim total_row As Long
+
+    total_row = 2
+
+   
+
+    For sym = 2 To lastrow
+
+   
+
+        If ws.Cells(sym, 1).Value = ws.Cells(sym + 1, 1).Value Then
+
+                ws.Cells(total_row, 9).Value = ws.Cells(sym, 1).Value
+
+                total_volume = total_volume + ws.Cells(sym, 7).Value
+
+   
+
+        ElseIf ws.Cells(sym, 1).Value <> ws.Cells(sym + 1, 1).Value Then
+
+                total_volume = total_volume + ws.Cells(sym, 7)
+
+                ws.Cells(total_row, 10).Value = total_volume
+
+                total_row = total_row + 1
+
+                total_volume = 0
+
+               
+
+                
+
+            
+
+        
+
+         End If
+
+   
+
+    Next sym
+
+   
+
+    Next ws
+
+ 
+
+End Sub
